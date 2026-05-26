@@ -24,9 +24,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		C4241C222FC15DF0009D08F9 /* BeautyBrief.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = BeautyBrief.xcodeproj; sourceTree = "<group>"; };
-		C4241EA02FC1FEF7009D08F9 /* BeautyBrief.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = BeautyBrief.xcodeproj; sourceTree = "<group>"; };
-		C424215B2FC3FCBB009D08F9 /* BeautyBrief.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = BeautyBrief.xcodeproj; sourceTree = "<group>"; };
 		C445F4EB2FBF2E17001F886E /* BeautyBrief.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeautyBrief.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C445F4FC2FBF2E18001F886E /* BeautyBriefTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BeautyBriefTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C445F5062FBF2E18001F886E /* BeautyBriefUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BeautyBriefUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -50,14 +47,8 @@
 				AllergyProfileViewModel.swift,
 				AppTheme.swift,
 				BatchCodeService.swift,
-				BeautyBriefApp.swift,
 				BeautyBriefTests.swift,
-				BrandDirectory.swift,
 				CameraPreviewView.swift,
-				CommunityPost.swift,
-				CommunityService.swift,
-				CommunityView.swift,
-				CommunityViewModel.swift,
 				ConfidenceBadge.swift,
 				"Contents 2.json",
 				"Contents 3.json",
@@ -65,43 +56,28 @@
 				"Contents 5.json",
 				"Contents 6.json",
 				Contents.json,
-				ContentView.swift,
-				CreatePostView.swift,
 				ExpiryTabView.swift,
-				GoogleVisionService.swift,
-				GoUPCService.swift,
-				INCIAPIService.swift,
+				FDARecallService.swift,
 				"Info 2.plist",
 				"Info 3.plist",
 				Info.plist,
 				Ingredient.swift,
 				IngredientAnalysisService.swift,
-				IngredientKnowledgeBase.swift,
-				IngredientRiskProfile.swift,
 				IngredientsTabView.swift,
 				"Item 2.swift",
 				"Item 3.swift",
 				Item.swift,
-				MissingProductReporter.swift,
 				MockData.swift,
 				OnboardingView.swift,
-				OpenBeautyFactsService.swift,
 				Product.swift,
 				ProductConfirmationView.swift,
 				ProductDatabaseService.swift,
 				ProductDetailView.swift,
-				ProductScoringService.swift,
-				ProductWebSearchService.swift,
 				SafetyTabView.swift,
 				ScanHistoryView.swift,
-				ScanHistoryViewModel.swift,
 				ScannerView.swift,
 				ScannerViewModel.swift,
 				ScanResult.swift,
-				ScoresTabView.swift,
-				SimilarProductsService.swift,
-				SimilarProductsTabView.swift,
-				UPCItemDBService.swift,
 			);
 			target = C445F4EA2FBF2E17001F886E /* BeautyBrief */;
 		};
@@ -156,27 +132,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		C4241C4F2FC15DF0009D08F9 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		C4241EC22FC1FEF7009D08F9 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		C42421922FC3FCBB009D08F9 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		C445F4E22FBF2E17001F886E = {
 			isa = PBXGroup;
 			children = (
@@ -319,18 +274,6 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = C4241EC22FC1FEF7009D08F9 /* Products */;
-					ProjectRef = C4241EA02FC1FEF7009D08F9 /* BeautyBrief.xcodeproj */;
-				},
-				{
-					ProductGroup = C42421922FC3FCBB009D08F9 /* Products */;
-					ProjectRef = C424215B2FC3FCBB009D08F9 /* BeautyBrief.xcodeproj */;
-				},
-				{
-					ProductGroup = C4241C4F2FC15DF0009D08F9 /* Products */;
-					ProjectRef = C4241C222FC15DF0009D08F9 /* BeautyBrief.xcodeproj */;
-				},
-				{
 					ProductGroup = C445F53A2FBF31C4001F886E /* Products */;
 					ProjectRef = C445F5392FBF31C4001F886E /* BeautyBrief.xcodeproj */;
 				},
@@ -415,7 +358,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = K4DGN8DH79;
@@ -429,8 +371,6 @@
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
-				"INFOPLIST_KEY_UILaunchScreen_BackgroundColor[sdk=iphoneos*]" = LaunchBackground;
-				"INFOPLIST_KEY_UILaunchScreen_BackgroundColor[sdk=iphonesimulator*]" = LaunchBackground;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
@@ -442,7 +382,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 26.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = app.beautybrief;
+				PRODUCT_BUNDLE_IDENTIFIER = BB.BeautyBrief;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
@@ -463,7 +403,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = K4DGN8DH79;
@@ -477,8 +416,6 @@
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
-				"INFOPLIST_KEY_UILaunchScreen_BackgroundColor[sdk=iphoneos*]" = LaunchBackground;
-				"INFOPLIST_KEY_UILaunchScreen_BackgroundColor[sdk=iphonesimulator*]" = LaunchBackground;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
@@ -490,7 +427,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 26.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = app.beautybrief;
+				PRODUCT_BUNDLE_IDENTIFIER = BB.BeautyBrief;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;

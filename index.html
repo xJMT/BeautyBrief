@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BeautyBrief — Know What's In Your Skincare</title>
+  <meta name="description" content="Scan any beauty product and know exactly what's in it. BeautyBrief flags your personal allergens, scores ingredient safety, and decodes expiry dates — instantly." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --beige:      #FAF5EF;
+      --beige-mid:  #EDE0D0;
+      --beige-dark: #D4C5B0;
+      --mocha:      #6B4226;
+      --mocha-dark: #4E3226;
+      --mocha-light:#9B7B6A;
+      --pink:       #F2B8C6;
+      --pink-light: #FAE3EA;
+      --pink-dark:  #D4788E;
+      --text:       #2C2218;
+      --soft:       #7A6560;
+      --white:      #ffffff;
+      --radius:     14px;
+      --shadow:     0 4px 24px rgba(107,66,38,.10);
+      --shadow-lg:  0 8px 40px rgba(107,66,38,.14);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--beige);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .serif { font-family: 'Playfair Display', Georgia, serif; }
+    a { color: var(--mocha); }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(250,245,239,.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--beige-mid);
+      padding: 0 24px;
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem; font-weight: 700;
+      color: var(--mocha-dark); text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a {
+      text-decoration: none; font-size: 0.9rem; font-weight: 500;
+      color: var(--soft); transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--mocha); }
+    .nav-cta {
+      background: var(--mocha); color: #fff !important;
+      padding: 9px 22px; border-radius: 50px;
+      font-weight: 600 !important; font-size: 0.88rem !important;
+      transition: background .2s !important;
+    }
+    .nav-cta:hover { background: var(--mocha-dark) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 100px 24px 80px;
+      text-align: center;
+      background: linear-gradient(180deg, var(--white) 0%, var(--beige) 100%);
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      background: var(--pink-light);
+      color: var(--pink-dark);
+      font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 6px 16px; border-radius: 50px;
+      margin-bottom: 28px;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.6rem, 6vw, 4.2rem);
+      font-weight: 700; line-height: 1.18;
+      color: var(--mocha-dark);
+      max-width: 760px; margin: 0 auto 24px;
+    }
+    .hero h1 em { color: var(--pink-dark); font-style: italic; }
+    .hero-sub {
+      font-size: clamp(1rem, 2.2vw, 1.18rem);
+      color: var(--soft); max-width: 560px;
+      margin: 0 auto 44px; line-height: 1.75;
+    }
+    .hero-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--mocha); color: #fff;
+      padding: 15px 32px; border-radius: 50px;
+      font-weight: 600; font-size: 1rem;
+      text-decoration: none; box-shadow: var(--shadow);
+      transition: background .2s, transform .15s;
+    }
+    .btn-primary:hover { background: var(--mocha-dark); transform: translateY(-1px); color: #fff; }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: transparent; color: var(--mocha);
+      padding: 15px 32px; border-radius: 50px;
+      font-weight: 600; font-size: 1rem;
+      text-decoration: none; border: 2px solid var(--beige-dark);
+      transition: border-color .2s, transform .15s;
+    }
+    .btn-secondary:hover { border-color: var(--mocha-light); transform: translateY(-1px); }
+    .hero-note { font-size: 0.8rem; color: var(--soft); margin-top: 18px; }
+
+    /* ── PHONE MOCKUP ── */
+    .hero-phone { max-width: 340px; margin: 60px auto 0; position: relative; }
+    .phone-frame {
+      background: var(--mocha-dark);
+      border-radius: 44px; padding: 14px;
+      box-shadow: var(--shadow-lg), 0 0 0 2px rgba(107,66,38,.15);
+    }
+    .phone-screen {
+      background: var(--beige); border-radius: 32px;
+      overflow: hidden; aspect-ratio: 9/19;
+      display: flex; flex-direction: column;
+    }
+    .ps-top {
+      background: linear-gradient(135deg, var(--mocha) 0%, var(--mocha-dark) 100%);
+      padding: 28px 20px 20px; color: white;
+    }
+    .ps-top-label { font-size: 0.65rem; opacity: 0.7; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 4px; }
+    .ps-top-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 600; }
+    .ps-top-brand { font-size: 0.7rem; opacity: 0.75; margin-top: 2px; }
+    .ps-score-row { display: flex; gap: 8px; margin-top: 14px; }
+    .ps-score-chip {
+      background: rgba(255,255,255,.15); border-radius: 50px;
+      padding: 4px 10px; font-size: 0.62rem; font-weight: 600;
+      display: flex; align-items: center; gap: 4px;
+    }
+    .ps-score-chip.green { background: rgba(123,174,143,.35); }
+    .ps-score-chip.amber { background: rgba(212,169,106,.35); }
+    .ps-score-chip.red { background: rgba(201,112,112,.35); }
+    .ps-body { flex: 1; padding: 14px 16px; display: flex; flex-direction: column; gap: 9px; overflow: hidden; }
+    .ps-section-title { font-size: 0.6rem; font-weight: 700; color: var(--mocha); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
+    .ps-ingredient {
+      background: white; border-radius: 8px; padding: 8px 10px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .ps-ing-name { font-size: 0.65rem; font-weight: 500; color: var(--text); }
+    .ps-ing-func { font-size: 0.56rem; color: var(--soft); }
+    .ps-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .ps-dot.green { background: #7BAE8F; }
+    .ps-dot.amber { background: #D4A96A; }
+    .ps-dot.red { background: #C97070; }
+    .ps-allergen-banner {
+      background: #FFF0F0; border: 1px solid #C97070; border-radius: 8px;
+      padding: 7px 10px; display: flex; align-items: center; gap: 7px;
+    }
+    .ps-allergen-banner span { font-size: 0.62rem; color: #C97070; font-weight: 600; }
+
+    /* ── SECTION SHARED ── */
+    section { padding: 96px 24px; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-eyebrow {
+      font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--pink-dark); margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.9rem, 4vw, 2.8rem);
+      font-weight: 700; color: var(--mocha-dark);
+      line-height: 1.25; margin-bottom: 18px;
+    }
+    .section-sub {
+      font-size: 1.05rem; color: var(--soft);
+      max-width: 540px; line-height: 1.8;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .how { background: white; }
+    .how-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 32px; margin-top: 56px;
+    }
+    .how-step {
+      text-align: center; padding: 40px 28px;
+      background: var(--beige); border-radius: var(--radius);
+    }
+    .how-number {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: var(--pink-light); color: var(--pink-dark);
+      font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .how-step h3 {
+      font-family: 'Playfair Display', serif; font-size: 1.15rem;
+      color: var(--mocha-dark); margin-bottom: 10px;
+    }
+    .how-step p { font-size: 0.92rem; color: var(--soft); line-height: 1.75; }
+
+    /* ── FEATURES ── */
+    .features-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px; margin-top: 56px;
+    }
+    .feature-card {
+      background: white; border-radius: var(--radius);
+      padding: 32px 28px; box-shadow: var(--shadow);
+      border: 1px solid var(--beige-mid);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .feature-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+    .feature-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      background: var(--pink-light); display: flex;
+      align-items: center; justify-content: center;
+      margin-bottom: 18px;
+    }
+    .feature-icon svg { width: 22px; height: 22px; stroke: var(--pink-dark); fill: none; stroke-width: 1.8; }
+    .feature-card h3 {
+      font-family: 'Playfair Display', serif; font-size: 1.1rem;
+      color: var(--mocha-dark); margin-bottom: 10px;
+    }
+    .feature-card p { font-size: 0.9rem; color: var(--soft); line-height: 1.75; }
+
+    /* ── SKIN PROFILES ── */
+    .profiles { background: var(--mocha-dark); color: white; }
+    .profiles .section-title { color: white; }
+    .profiles .section-sub { color: rgba(255,255,255,.65); }
+    .profiles-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px; margin-top: 48px;
+    }
+    .profile-chip {
+      background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12);
+      border-radius: 12px; padding: 20px;
+      text-align: center;
+    }
+    .profile-chip .chip-label { font-size: 0.85rem; font-weight: 600; color: rgba(255,255,255,.9); margin-bottom: 4px; }
+    .profile-chip .chip-desc { font-size: 0.77rem; color: rgba(255,255,255,.5); }
+
+    /* ── FAQ ── */
+    .faq { background: white; }
+    .faq-list { max-width: 740px; margin: 52px auto 0; display: flex; flex-direction: column; gap: 4px; }
+    .faq-item { border-radius: 10px; overflow: hidden; }
+    .faq-q {
+      width: 100%; text-align: left;
+      background: var(--beige); border: none;
+      padding: 20px 24px; cursor: pointer;
+      font-size: 0.97rem; font-weight: 600;
+      color: var(--mocha-dark); font-family: inherit;
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 12px; transition: background .2s;
+    }
+    .faq-q:hover { background: var(--beige-mid); }
+    .faq-q svg { flex-shrink: 0; transition: transform .25s; width: 18px; height: 18px; stroke: var(--mocha-light); }
+    .faq-item.open .faq-q svg { transform: rotate(45deg); }
+    .faq-a {
+      background: var(--beige); padding: 0 24px;
+      font-size: 0.9rem; color: var(--soft); line-height: 1.8;
+      max-height: 0; overflow: hidden; transition: max-height .3s ease, padding .3s;
+    }
+    .faq-item.open .faq-a { max-height: 300px; padding: 4px 24px 20px; }
+
+    /* ── CTA BANNER ── */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--mocha) 0%, var(--mocha-dark) 100%);
+      padding: 80px 24px; text-align: center; color: white;
+    }
+    .cta-banner h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .cta-banner p { font-size: 1rem; opacity: 0.75; margin-bottom: 36px; }
+    .btn-white {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: white; color: var(--mocha);
+      padding: 15px 36px; border-radius: 50px;
+      font-weight: 700; font-size: 1rem;
+      text-decoration: none; box-shadow: 0 4px 20px rgba(0,0,0,.15);
+      transition: transform .15s;
+    }
+    .btn-white:hover { transform: translateY(-2px); color: var(--mocha); }
+    .cta-soon { font-size: 0.8rem; opacity: 0.55; margin-top: 14px; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--mocha-dark); color: rgba(255,255,255,.55);
+      padding: 48px 24px 32px; text-align: center; font-size: 0.84rem;
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; color: white; font-weight: 700;
+      display: block; margin-bottom: 20px;
+    }
+    .footer-links { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-bottom: 28px; }
+    .footer-links a { color: rgba(255,255,255,.55); text-decoration: none; transition: color .2s; }
+    .footer-links a:hover { color: white; }
+    .footer-disclaimer {
+      max-width: 600px; margin: 0 auto 20px;
+      font-size: 0.76rem; line-height: 1.7; opacity: 0.45;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 680px) {
+      nav { padding: 0 16px; }
+      .nav-links { gap: 0; }
+      .nav-links a:not(.nav-cta) { display: none; }
+      .hero { padding: 72px 20px 56px; }
+      section { padding: 72px 20px; }
+      .how-step { padding: 28px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#">BeautyBrief</a>
+    <div class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#features">Features</a>
+      <a href="#faq">FAQ</a>
+      <a href="#download" class="nav-cta">Download</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Now available on iOS</div>
+  <h1 class="serif">Know exactly what's in<br /><em>your skincare.</em></h1>
+  <p class="hero-sub">Scan any beauty product and get a full ingredient breakdown, personalised allergen alerts, safety scores, and expiry information — instantly.</p>
+  <div class="hero-buttons">
+    <a href="#download" class="btn-primary" id="download">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 16l-6-6h4V4h4v6h4l-6 6z"/><path d="M4 20h16"/></svg>
+      Download on the App Store
+    </a>
+    <a href="#how" class="btn-secondary">See how it works</a>
+  </div>
+  <p class="hero-note">Free to download &nbsp;·&nbsp; iOS 16 or later &nbsp;·&nbsp; No account required</p>
+
+  <!-- Phone mockup -->
+  <div class="hero-phone">
+    <div class="phone-frame">
+      <div class="phone-screen">
+        <div class="ps-top">
+          <div class="ps-top-label">Scan result</div>
+          <div class="ps-top-name">Foaming Facial Cleanser</div>
+          <div class="ps-top-brand">CeraVe &nbsp;·&nbsp; 473ml</div>
+          <div class="ps-score-row">
+            <div class="ps-score-chip green">✓ Safe for sensitive skin</div>
+            <div class="ps-score-chip amber">⚠ 1 allergen found</div>
+          </div>
+        </div>
+        <div class="ps-body">
+          <div class="ps-allergen-banner">
+            <span>⚠ Contains: Sodium Laureth Sulfate — on your watchlist</span>
+          </div>
+          <div class="ps-section-title">Ingredients (top 5)</div>
+          <div class="ps-ingredient">
+            <div><div class="ps-ing-name">Aqua / Water</div><div class="ps-ing-func">Solvent</div></div>
+            <div class="ps-dot green"></div>
+          </div>
+          <div class="ps-ingredient">
+            <div><div class="ps-ing-name">Glycerin</div><div class="ps-ing-func">Humectant</div></div>
+            <div class="ps-dot green"></div>
+          </div>
+          <div class="ps-ingredient">
+            <div><div class="ps-ing-name">Sodium Laureth Sulfate</div><div class="ps-ing-func">Surfactant</div></div>
+            <div class="ps-dot red"></div>
+          </div>
+          <div class="ps-ingredient">
+            <div><div class="ps-ing-name">Niacinamide</div><div class="ps-ing-func">Active</div></div>
+            <div class="ps-dot green"></div>
+          </div>
+          <div class="ps-ingredient">
+            <div><div class="ps-ing-name">Ceramide NP</div><div class="ps-ing-func">Emollient</div></div>
+            <div class="ps-dot green"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="container">
+    <div class="section-eyebrow">How it works</div>
+    <div class="section-title serif">Three steps to knowing<br />what's in your product</div>
+    <div class="how-grid">
+      <div class="how-step">
+        <div class="how-number">1</div>
+        <h3>Scan the barcode</h3>
+        <p>Point your camera at any barcode on a skincare, makeup, or personal care product. BeautyBrief identifies it in seconds.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-number">2</div>
+        <h3>Get the full breakdown</h3>
+        <p>See every ingredient explained in plain English — what it does, whether it's a concern for your skin type, and if it's on your personal allergen list.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-number">3</div>
+        <h3>Scan with confidence</h3>
+        <p>Safety scores, allergen alerts, and expiry decoding all in one place. Your profile stays on your device — no account, no data sharing.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="container">
+    <div class="section-eyebrow">Features</div>
+    <div class="section-title serif">Everything you need to<br />shop smarter</div>
+    <div class="features-grid">
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 012-2h2M17 3h2a2 2 0 012 2v2M21 17v2a2 2 0 01-2 2h-2M7 21H5a2 2 0 01-2-2v-2"/><rect x="7" y="7" width="10" height="10" rx="1"/></svg>
+        </div>
+        <h3>Barcode Scanner</h3>
+        <p>Instantly identify any skincare or beauty product from its barcode. Works on thousands of brands across cleansers, moisturisers, serums, sunscreen, and more.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01"/><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
+        </div>
+        <h3>Personalised Allergen Alerts</h3>
+        <p>Set up your allergen and sensitivity profile once. BeautyBrief will flag any flagged ingredient on every product you scan — before you buy or apply.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <h3>Expiry Date Decoder</h3>
+        <p>Can't read the batch code? BeautyBrief decodes manufacturing dates and period-after-opening symbols so you always know if a product is still safe to use.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        </div>
+        <h3>Safety Scores</h3>
+        <p>Each product is scored across multiple dimensions: overall safety, irritancy, fragrance load, pregnancy safety, and environmental impact. At a glance.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <h3>Skin Type Matching</h3>
+        <p>Tell BeautyBrief your skin type and concerns — dry, oily, sensitive, acne-prone, and more. Every scan is personalised to what actually matters for your skin.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <h3>Scan History</h3>
+        <p>Every product you scan is saved to your personal history. Review what you've checked, track what you're using, and compare products side by side.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKIN PROFILES -->
+<section class="profiles">
+  <div class="container">
+    <div class="section-eyebrow" style="color:var(--pink)">Built for your skin</div>
+    <div class="section-title serif">Your profile, your results</div>
+    <p class="section-sub">BeautyBrief adapts to you. Set your skin type, mark your allergens, and choose your lifestyle — and every scan reflects your individual needs.</p>
+    <div class="profiles-grid">
+      <div class="profile-chip">
+        <div class="chip-label">Sensitive Skin</div>
+        <div class="chip-desc">Flags irritants before they cause a reaction</div>
+      </div>
+      <div class="profile-chip">
+        <div class="chip-label">Vegan / Cruelty-Free</div>
+        <div class="chip-desc">Filter for animal-derived ingredients</div>
+      </div>
+      <div class="profile-chip">
+        <div class="chip-label">Pregnancy Mode</div>
+        <div class="chip-desc">Highlights ingredients to avoid during pregnancy</div>
+      </div>
+      <div class="profile-chip">
+        <div class="chip-label">Fragrance-Free</div>
+        <div class="chip-desc">Spots hidden fragrance and parfum entries</div>
+      </div>
+      <div class="profile-chip">
+        <div class="chip-label">Allergy Profiles</div>
+        <div class="chip-desc">20+ common allergens to toggle on or off</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="container">
+    <div class="section-eyebrow" style="text-align:center">FAQ</div>
+    <div class="section-title serif" style="text-align:center">Common questions</div>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          How accurate is the ingredient data?
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-a">BeautyBrief pulls ingredient data from multiple verified databases including Open Beauty Facts and INCI databases. Accuracy depends on the product being registered in these databases. For the most reliable information, always cross-reference with the physical product label. BeautyBrief is an informational tool and does not replace professional advice.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          What products can I scan?
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-a">BeautyBrief works best with skincare, makeup, and personal care products that have a standard EAN or UPC barcode. This includes cleansers, moisturisers, serums, sunscreen, foundations, lip products, hair care, and more. Coverage is broadest for major brands sold in Australia, the US, and Europe.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Is my data private?
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-a">Yes. Your allergen profile, skin type, and scan history are stored locally on your device only. BeautyBrief does not require an account, does not sell your data, and does not send your personal profile to any server. Community posts are the only content that leaves your device, and you control what you share.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Does BeautyBrief replace a dermatologist?
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-a">No. BeautyBrief is an informational tool only. It is not a medical device and does not provide medical or dermatological advice. Always consult a qualified professional for skin concerns, diagnosed allergies, or medical conditions. The safety assessments in the app are general informational estimates, not clinical determinations.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          What if a product isn't in the database?
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-a">If a product isn't found, you can report it directly from the app. We regularly expand our database coverage. You can also use the photo scan feature to photograph the ingredient list on the packaging and BeautyBrief will attempt to read and analyse it using optical character recognition.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Is BeautyBrief free?
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-a">BeautyBrief is free to download. Core features including barcode scanning, ingredient breakdown, allergen alerts, and scan history are available on the free plan. A BeautyBrief Pro subscription unlocks additional features. You can try the app fully before deciding.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta-banner">
+  <h2 class="serif">Read the label before<br />your skin does.</h2>
+  <p>Free to download. No account required. Your data stays on your device.</p>
+  <a href="#" class="btn-white">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 16l-6-6h4V4h4v6h4l-6 6z"/><path d="M4 20h16"/></svg>
+    Download on the App Store
+  </a>
+  <p class="cta-soon">Available on iOS 16 or later &nbsp;·&nbsp; iPhone &amp; iPad</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">BeautyBrief</span>
+  <div class="footer-links">
+    <a href="./privacy-policy.html">Privacy Policy</a>
+    <a href="./terms-of-service.html">Terms of Service</a>
+    <a href="mailto:beautybriefapp@gmail.com">Contact</a>
+  </div>
+  <p class="footer-disclaimer">BeautyBrief is for informational purposes only and does not constitute medical, dermatological, or professional skincare advice. Always consult a qualified professional for skin concerns. Ingredient data is sourced from publicly available databases and may not reflect the most current product formulations.</p>
+  <p>&copy; 2026 BeautyBrief. All rights reserved. &nbsp;·&nbsp; Made in Melbourne, Australia.</p>
+</footer>
+
+<script>
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+</script>
+
+</body>
+</html>
